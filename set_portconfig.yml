@@ -1,7 +1,7 @@
 ---
 
 - name: Various Tasks
-  hosts: veos1
+  hosts: "{{ switch_name }}"
   gather_facts: no
   become: yes
   become_method: enable
@@ -12,16 +12,16 @@
       eos_config:
         lines:
         - description Customer/Voice
-        - switchport trunk native vlan 200
+        - switchport trunk native vlan {{ access_vlanID }}
         - switchport mode trunk
         - spanning-tree portfast
         - no shutdown
-        parents: interface Ethernet1
+        parents: interface {{ interface_name }}
 
-    - name: Set Hostname
-      eos_config:
-        lines: hostname {{ inventory_hostname }}
-        save_when: always
+    # - name: Set Hostname
+    #   eos_config:
+    #     lines: hostname {{ inventory_hostname }}
+    #     save_when: always
 
     - name: run multiple commands on remote nodes
       eos_command:
