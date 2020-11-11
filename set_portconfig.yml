@@ -35,7 +35,7 @@
         - switchport mode trunk
         - spanning-tree portfast
         parents: interface {{ interface_name }}
-      when: access_vlanID != ""
+      when: access_vlanID is defined and access_vlanID != ""
 
     # Modify Port Speed if value entered in Tower Survey
     - name: Modify Port Speed
