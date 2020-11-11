@@ -26,4 +26,11 @@ interface {{ interface_name }}
 {% endif %}
    switchport mode trunk
    spanning-tree portfast
+{% if port_status is defined and port_status != "" %}
+{%    if port_status == "Enable" %}
+   no shutdown
+{%    else %}
+   shutdown
+{%    endif %}
+{% endif %}
 
