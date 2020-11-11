@@ -2,8 +2,8 @@
 
 # Playbook executed in Tower with a Survey to gather inputs below
 
-- name: Various Tasks
-  hosts: "{{ switch_name }}"
+- name: Show running config of interface
+  hosts: veos1
   gather_facts: no
   become: yes
   become_method: enable
@@ -11,6 +11,10 @@
   tasks:
 
   # Show Port's current running-config
-    - name: run show version on remote devices
+    - name: Show port running-config
       eos_command:
-        commands: show run interface {{ interface_name }}
+        commands:
+          - configure
+          - interface Ethernet1
+          - show active
+        authorize: yes
