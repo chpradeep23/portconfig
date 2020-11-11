@@ -1,0 +1,32 @@
+---
+
+- name: Prompt for Variables
+  #connection: network_cli
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  become_method: enable
+
+  vars_prompt:
+
+    - name: device_name
+      prompt: What switch name?
+      private: no
+
+    - name: device_interface
+      prompt: Device Interface?
+      private: no
+
+    - name: access_vlan
+      prompt: VLAN ID........?
+      private: no
+
+
+  tasks:
+
+    - name: Switch config
+      debug:
+        msg:
+          - 'interface {{ device_interface }}'
+          - '   switchport access vlan {{ access_vlan }}'
+
