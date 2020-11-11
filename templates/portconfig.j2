@@ -7,7 +7,7 @@ Use variables defined in Tower Survey:
     port_desc: Router Uplink
     port_speed: 10half
     switch_name: veos1
-    
+
 #}
 
 interface {{ interface_name }}
@@ -15,7 +15,11 @@ interface {{ interface_name }}
    description {{ port_desc }}
 {% endif %}
 {% if port_speed is defined and port_speed != "" %}
+{%   if port_speed =="auto" %}
+   default speed
+{%   else %}
    speed {{ port_speed }}
+{%   endif %}
 {% endif %}
 {% if access_vlanID is defined and access_vlanID != "" %}
    switchport trunk native vlan {{ access_vlanID }}
