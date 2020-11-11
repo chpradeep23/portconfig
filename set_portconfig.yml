@@ -43,4 +43,4 @@
         lines:
         - speed {{ port_speed }}
         parents: interface {{ interface_name }}
-      when: port_speed != ""
+      when: port_speed is defined and port_speed != ""
