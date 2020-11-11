@@ -2,7 +2,7 @@
 
 # Playbook executed in Tower with a Survey to gather inputs below
 
-- name: Show running config of {{ interface_name }}
+- name: Retrieve running config of {{ interface_name }} on "{{ switch_name }}"
   hosts: "{{ switch_name }}"
   gather_facts: no
   become: yes
