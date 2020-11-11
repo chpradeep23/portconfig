@@ -26,4 +26,4 @@
         lines:
         - description {{ port_desc }}
         parents: interface {{ interface_name }}
-        when: port_desc
+      when: port_desc
