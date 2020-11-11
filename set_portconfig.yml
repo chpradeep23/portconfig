@@ -25,7 +25,7 @@
         lines:
         - description {{ port_desc }}
         parents: interface {{ interface_name }}
-      when: port_desc != ""
+      when: port_desc is defined and port_desc != ""
 
     # Modify Port Access VLAN ID if value entered in Tower Survey
     - name: Modify Access VLAN ID
