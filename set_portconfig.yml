@@ -10,20 +10,37 @@
 
   tasks:
 
-    - name: Configure Port
-      eos_config:
-        lines:
-        - switchport trunk native vlan {{ access_vlanID }}
-        - switchport mode trunk
-        - spanning-tree portfast
-        - no shutdown
-        - default speed
-        parents: interface {{ interface_name }}
+    # - name: Configure Port
+    #   eos_config:
+    #     lines:
+    #     # - switchport trunk native vlan {{ access_vlanID }}
+    #     - switchport mode trunk
+    #     - spanning-tree portfast
+    #     # - no shutdown
+    #     parents: interface {{ interface_name }}
 
-    # Change Port Description if value entered in Tower Survey
-    - name: Configure Port Description
+    # Modify Port Description if value entered in Tower Survey
+    - name: Modify Port Description
       eos_config:
         lines:
         - description {{ port_desc }}
         parents: interface {{ interface_name }}
       when: port_desc != ""
+
+    # Modify Port Access VLAN ID if value entered in Tower Survey
+    - name: Modify Access VLAN ID
+      eos_config:
+        lines:
+        - switchport trunk native vlan {{ access_vlanID }}
+        - switchport mode trunk
+        - spanning-tree portfast
+        parents: interface {{ interface_name }}
+      when: access_vlanID != ""
+
+    # Modify Port Speed if value entered in Tower Survey
+    - name: Modify Port Speed
+      eos_config:
+        lines:
+        - speed {{ port_speed }}
+        parents: interface {{ interface_name }}
+      when: port_speed != ""
