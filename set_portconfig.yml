@@ -1,5 +1,7 @@
 ---
 
+# Playbook executed in Tower with a Survey to gather inputs below
+
 - name: Various Tasks
   hosts: "{{ switch_name }}"
   gather_facts: no
@@ -8,26 +10,20 @@
 
   tasks:
 
-    - name: Configure port
+    - name: Configure Port
       eos_config:
         lines:
-        - description Customer/Voice
         - switchport trunk native vlan {{ access_vlanID }}
         - switchport mode trunk
         - spanning-tree portfast
         - no shutdown
+        - default speed
         parents: interface {{ interface_name }}
 
-    # - name: Set Hostname
-    #   eos_config:
-    #     lines: hostname {{ inventory_hostname }}
-    #     save_when: always
-
-    - name: run multiple commands on remote nodes
-      eos_command:
-        commands:
-        - show version
-        - show interfaces
-        wait_for:
-        - result[0] contains vEOS
-        - result[1] contains Loopback0
+    # Change Port Description if value entered in Tower Survey
+    - name: Configure Port Description
+      eos_config:
+        lines:
+        - description {{ port_desc }}
+        parents: interface {{ interface_name }}
+        when: port_desc
