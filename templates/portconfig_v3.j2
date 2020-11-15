@@ -24,7 +24,7 @@ interface {{ intf }}
 {% if access_vlanID is defined and access_vlanID != "" %}
    switchport trunk native vlan {{ access_vlanID }}
 {% endif %}
-   switchport mode trunk
+   switchport mode trunk phone
    spanning-tree portfast
 {% if port_status is defined and port_status != "" %}
 {%    if port_status == "Enable" %}
