@@ -9,7 +9,7 @@ Use variables defined in Tower Survey:
     switch_name: veos1
 
 #}
-{% for intf in interfaces_names %}
+{% for intf in interface_names %}
 interface {{ intf }}
 {% if port_desc is defined and port_desc != "" %}
    description {{ port_desc }}
