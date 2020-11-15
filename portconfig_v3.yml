@@ -1,0 +1,17 @@
+---
+
+# Playbook executed in Tower with a Survey to gather inputs below
+
+- name: Various Tasks
+  hosts: "{{ switch_name }}"
+  gather_facts: no
+  become: yes
+  become_method: enable
+
+  tasks:
+
+    # Modify Port Parameters from values entered in Tower Survey
+
+    - name: Modify Port Configurations
+      eos_config:
+        src: "templates/portconfig_v3.j2"
