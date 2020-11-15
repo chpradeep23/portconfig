@@ -9,8 +9,8 @@ Use variables defined in Tower Survey:
     switch_name: veos1
 
 #}
-
-interface {{ interface_name }}
+{% for intf in interfaces_names %}
+interface {{ intf }}
 {% if port_desc is defined and port_desc != "" %}
    description {{ port_desc }}
 {% endif %}
@@ -33,4 +33,4 @@ interface {{ interface_name }}
    shutdown
 {%    endif %}
 {% endif %}
-
+{% endfor %}
