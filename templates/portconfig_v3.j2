@@ -24,8 +24,11 @@ interface {{ intf }}
 {% if access_vlanID is defined and access_vlanID != "" %}
    switchport trunk native vlan {{ access_vlanID }}
 {% endif %}
+   switchport phone vlan 300
+   switchport phone trunk untagged
    switchport mode trunk phone
    spanning-tree portfast
+
 {% if port_status is defined and port_status != "" %}
 {%    if port_status == "Enable" %}
    no shutdown
