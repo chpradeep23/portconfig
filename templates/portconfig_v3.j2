@@ -11,29 +11,29 @@ Use variables defined in Tower Survey:
 #}
 {% for intf in interface_names %}
 interface {{ intf }}
-{% if port_desc is defined and port_desc != "" %}
+{%    if port_desc is defined and port_desc != "" %}
    description {{ port_desc }}
-{% endif %}
-{% if port_speed is defined and port_speed != "" %}
-{%   if port_speed =="auto" %}
+{%    endif %}
+{%    if port_speed is defined and port_speed != "" %}
+{%       if port_speed =="auto" %}
    default speed
-{%   else %}
+{%       else %}
    speed {{ port_speed }}
-{%   endif %}
-{% endif %}
-{% if access_vlanID is defined and access_vlanID != "" %}
+{%       endif %}
+{%    endif %}
+{%    if access_vlanID is defined and access_vlanID != "" %}
    switchport trunk native vlan {{ access_vlanID }}
-{% endif %}
+{%    endif %}
    switchport phone vlan 300
    switchport phone trunk untagged
    switchport mode trunk phone
    spanning-tree portfast
 
-{% if port_status is defined and port_status != "" %}
-{%    if port_status == "Enable" %}
+{%    if port_status is defined and port_status != "" %}
+{%       if port_status == "Enable" %}
    no shutdown
-{%    else %}
+{%       else %}
    shutdown
+{%       endif %}
 {%    endif %}
-{% endif %}
 {% endfor %}
