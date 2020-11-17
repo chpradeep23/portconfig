@@ -1,0 +1,40 @@
+---
+
+- name: Backup configs
+  connection: httpapi
+  #connection: network_cli
+  #become_method: enable
+  gather_facts: no
+  hosts: NODES
+
+  tasks:
+
+   - name: Backup configs
+     eos_config:
+       backup: yes
+       backup_options:
+         filename: "{{ inventory_hostname }}.cfg"
+         dir_path: "config_backups"
+     when: inventory_hostname in groups['NODES']
+
+# - name: Commit Configuration Changes
+#   hosts: localhost
+#   connection: local
+#   tags: git
+
+#   tasks:
+
+#     - name: Committing changes to Local repo & pushing to GitHub
+#       shell: |
+#         git add .
+#         git commit -m "Config snapshot taken $(date +"%Y-%m-%d %H:%M:%S")"
+#         # Push changes to GitHub
+#         # Remote repo pre-defined in local git
+#         git remote add origin https://github.com/mthiel117/homelabs.git
+#         git push -u origin master
+#         git push
+#         # Exit needed as git commit will fail if there are no changed files
+#         exit 0
+#       args:
+#           # Change to local repo directory to commit changes
+#           chdir: "{{ local_git_repo_path }}"
