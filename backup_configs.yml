@@ -14,7 +14,7 @@
        backup: yes
        backup_options:
          filename: "{{ inventory_hostname }}.cfg"
-         dir_path: "config_backups"
+         dir_path: "/home/mthiel/config_backups"
      when: inventory_hostname in groups['NODES']
 
 # - name: Commit Configuration Changes
