@@ -2,7 +2,7 @@
 
 # Playbook executed in Tower with a Survey to gather inputs below
 
-- name: Retrieve running config of {{ interface_names }} on "{{ switch_name }}"
+- name: Retrieve running config of {{ interface_names[0] }} on "{{ switch_name }}"
   hosts: "{{ switch_name }}"
   gather_facts: no
   become: yes
@@ -11,12 +11,12 @@
   tasks:
 
   # Show Port's current running-config
-    - name: Gather {{ interface_names }} running-config
+    - name: Gather {{ interface_names[0] }} running-config
       eos_command:
         commands:
-          - show running-config interfaces {{ interface_names }}
+          - show running-config interfaces {{ interface_names[0] }}
       register: interface_config
 
-    - name: Display Current running-config of {{ interface_names }}
+    - name: Display Current running-config of {{ interface_names[0] }}
       debug:
         msg: "{{ interface_config.stdout_lines[0] }}"
