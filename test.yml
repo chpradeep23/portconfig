@@ -11,10 +11,14 @@
   vars:
     interfaces:
       - Ethernet8
+      - Ethernet9
 
   tasks:
 
     # Change Port Description if value entered in Tower Survey
     - name: Configure Port Description
       debug:
-        msg: "{{ interfaces | join(',') }}"
+        # msg: "{{ interfaces | join(',') }}"
+        msg:
+          - "{{ interfaces[0] }}"
+          - "{{ interfaces | join(',') }}"

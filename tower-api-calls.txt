@@ -1,0 +1,41 @@
+Access API From Browser
+https://192.168.1.204/api
+
+
+curl -s  -k  -u admin:cvpadmin123 https://192.168.1.204/api/v2/jobs/ | jq '.results | .[]| .summary_fields| .job_template | .name'
+
+Query & Launch a Backup Job Template
+---------------------------------
+
+Query Backup Job Template - no extra vars needed
+curl -k -u admin:cvpadmin123 -X GET https://192.168.1.204/api/v2/job_templates/21/launch/ | python -m json.tool
+
+Launch Backup Job Template - no extra vars needed
+curl -k -u admin:cvpadmin123 -X POST https://192.168.1.204/api/v2/job_templates/21/launch/ | python -m json.tool
+
+
+===============================================
+
+Vars needed for QUICK - Port Config Job
+
+YAML
+-------
+access_vlanID: '100'
+interface_names:
+  - Ethernet8
+  - Ethernet9
+port_desc: TEST VIA API
+switch_name: poe-sw1
+
+JSON Representation
+----------------------
+{"access_vlanID":"100","interface_names":["Ethernet8","Ethernet9"],"port_desc":"TEST VIA API","switch_name":"poe-sw1"}
+
+Query QUICK - Port Configurator Job Template
+curl -k -u admin:cvpadmin123 -X GET https://192.168.1.204/api/v2/job_templates/19/launch/ | python -m json.tool
+
+Launch QUICK - Port Configurator Job Template (added variables)
+curl -k -u admin:cvpadmin123 -d '{"extra_vars": {"access_vlanID":"100","interface_names":["Ethernet8","Ethernet9"],"port_desc":"TEST VIA API","switch_name":"poe-sw1"}}' -H 'Content-Type: application/json' -X POST https://192.168.1.204/api/v2/job_templates/19/launch/ | python -m json.tool
+
+
+
