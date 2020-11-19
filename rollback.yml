@@ -25,7 +25,7 @@
     # Debug: Print the variables
     - name: Verify the last checkpoint name
       debug:
-        msg: "{{ last_checkpoint }}"
+        msg: "Rolling back to Checkpoint: {{ last_checkpoint }}"
 
     # Rollback the change
     - name: Rollback to latest checkpoint
