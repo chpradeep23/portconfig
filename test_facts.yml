@@ -21,7 +21,12 @@
           - show configuration checkpoints
       register: checkpoints
 
+    # Set the Variable
+    - name: Set Last Checkpoint Varible
+      set_fact:
+        last_checkpoint: "{{ checkpoints['stdout'][0].split('\n')[-1].split()[0] }}"
+
     # Debug: Print the variables
-    - name: Print out the variables
+    - name: Print out the variable
       debug:
-        msg: "{{ checkpoints['stdout'][0].split('\n')[-1].split()[0] }}"
+        msg: "{{ last_checkpoint }}"

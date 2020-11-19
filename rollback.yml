@@ -1,0 +1,34 @@
+---
+
+# Playbook executed in Tower with a Survey to gather inputs below
+
+- name: Rollback to latest saved Checkpoint
+  hosts: "{{ switch_name }}"
+  gather_facts: no
+  become: yes
+  become_method: enable
+
+  tasks:
+
+    # Get a list of checkpoints and register output to variable 'checkpoints'
+    - name: Get Checkpoints
+      eos_command:
+        commands:
+          - show configuration checkpoints
+      register: checkpoints
+
+    # Pick off the last checkpoint from the list and set it to 'last_checkpoint'
+    - name: Set Last Checkpoint Varible
+      set_fact:
+        last_checkpoint: "{{ checkpoints['stdout'][0].split('\n')[-1].split()[0] }}"
+
+    # Debug: Print the variables
+    - name: Verify the last checkpoint name
+      debug:
+        msg: "{{ last_checkpoint }}"
+
+    # Rollback the change
+    - name: Rollback to latest checkpoint
+      eos_command:
+        commands:
+          - configure checkpoint restore {{ last_checkpoint }}
