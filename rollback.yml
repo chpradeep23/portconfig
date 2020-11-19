@@ -23,7 +23,7 @@
         last_checkpoint: "{{ checkpoints['stdout'][0].split('\n')[-1].split()[0] }}"
 
     # Debug: Print the variables
-    - name: Verify the last checkpoint name
+    - name: List Checkpoint
       debug:
         msg: "Rolling back to Checkpoint: {{ last_checkpoint }}"
 
