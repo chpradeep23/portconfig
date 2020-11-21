@@ -28,3 +28,7 @@ all:
                   ansible_host: 192.168.1.189
                 poe-sw1:
                   ansible_host: 192.168.1.247
+                  ansible_network_os: eos
+                poe-sw2:
+                  ansible_host: 192.168.1.243
+                  ansible_network_os: ios

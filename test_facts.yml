@@ -3,30 +3,14 @@
 # Playbook executed in Tower with a Survey to gather inputs below
 
 - name: Various Tasks
-  hosts: poe-sw1
-  gather_facts: no
+  hosts: poe-sw1, poe-sw2
+  gather_facts: yes
   become: yes
   become_method: enable
 
   tasks:
 
-    # - name: Gather all legacy facts
-    #   eos_facts:
-    #     gather_subset: all
-    #   register: switch_vars
-
-    - name: Get Checkpoints
-      eos_command:
-        commands:
-          - show configuration checkpoints
-      register: checkpoints
-
-    # Set the Variable
-    - name: Set Last Checkpoint Varible
-      set_fact:
-        last_checkpoint: "{{ checkpoints['stdout'][0].split('\n')[-1].split()[0] }}"
-
-    # Debug: Print the variables
-    - name: Print out the variable
+    - name: Print all available facts
       debug:
-        msg: "{{ last_checkpoint }}"
+        #var: ansible_facts
+        msg: "{{ ansible_facts.net_hostname }} is running {{ ansible_facts.net_system }} version {{ ansible_facts.net_version }}"

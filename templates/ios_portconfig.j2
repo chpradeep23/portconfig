@@ -1,0 +1,37 @@
+{#
+
+Use variables defined in Tower Survey:
+
+    access_vlanID: '300'
+    interface_names: Ethernet1
+    port_desc: Router Uplink
+    port_speed: 10half
+    switch_name: veos1
+
+#}
+{% for intf in interface_names %}
+interface GigabitEthernet0/{{ intf }}
+{%    if port_desc is defined and port_desc != "" %}
+   description {{ port_desc }}
+{%    endif %}
+{%    if port_speed is defined and port_speed != "" %}
+{%       if port_speed =="auto" %}
+   default speed
+{%       else %}
+   speed {{ port_speed }}
+{%       endif %}
+{%    endif %}
+{%    if access_vlanID is defined and access_vlanID != "" %}
+   switchport access vlan {{ access_vlanID }}
+{%    endif %}
+   switchport voice vlan 300
+   spanning-tree portfast
+
+{%    if port_status is defined and port_status != "" %}
+{%       if port_status == "Enable" %}
+   no shutdown
+{%       else %}
+   shutdown
+{%       endif %}
+{%    endif %}
+{% endfor %}
