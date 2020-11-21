@@ -1,21 +1,28 @@
 ---
 
 - name: Backup configs
-  connection: httpapi
-  #connection: network_cli
+  connection: network_cli
   #become_method: enable
-  gather_facts: no
+  gather_facts: yes
   hosts: NODES
 
   tasks:
 
-   - name: Backup configs
+   - name: Backup Arista config
      eos_config:
        backup: yes
        backup_options:
          filename: "{{ inventory_hostname }}.cfg"
          dir_path: "/home/mthiel/config_backups"
-     when: inventory_hostname in groups['NODES']
+     when: ansible_facts.net_system == "eos"
+
+   - name: Backup Cisco config
+     ios_config:
+       backup: yes
+       backup_options:
+         filename: "{{ inventory_hostname }}.cfg"
+         dir_path: "/home/mthiel/config_backups"
+     when: ansible_facts.net_system == "ios"
 
 # - name: Commit Configuration Changes
 #   hosts: localhost
