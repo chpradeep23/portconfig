@@ -1,0 +1,34 @@
+---
+
+# Playbook executed in Tower with a Survey to gather inputs below
+
+- name: Various Tasks
+  hosts: poe-sw1, poe-sw2
+  gather_facts: no
+
+
+  vars:
+    interface_names:
+      - 8
+      - 9
+    port_desc: 'TESTING123'
+
+  tasks:
+
+    # Modify Port Parameters from values entered in Tower Survey
+    - name: Configure Switch Port(s)
+      block:
+        - name: Modify Arista Switch Port
+          eos_config:
+            src: "templates/eos_portconfig.j2"
+            save_when: modified
+          when: ansible_network_os == "eos"
+
+        - name: Modify Cisco Switch Port
+          ios_config:
+            src: "templates/ios_portconfig.j2"
+            save_when: modified
+          when: ansible_network_os == "ios"
+
+
+
