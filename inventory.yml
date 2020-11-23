@@ -6,6 +6,9 @@ all:
           children:
             NODES:
               hosts:
+                hosw:
+                  ansible_host: 10.0.0.5
+                  ansible_network_os: ios
                 veos1:
                   ansible_host: 192.168.1.180
                 veos2:
